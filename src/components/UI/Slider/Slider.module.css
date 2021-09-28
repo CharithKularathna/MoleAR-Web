@@ -1,0 +1,49 @@
+.Carousel {
+    overflow-x: hidden;
+}
+
+.SliderItem1 {
+    background-image: url('https://cdn.pixabay.com/photo/2016/12/13/11/20/dna-1903875_960_720.jpg');
+}
+
+.SliderItem2 {
+    background-image: url('https://cdn.pixabay.com/photo/2016/02/25/17/31/atom-1222511_960_720.jpg');
+} 
+
+
+.CarouselItem {
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: soft-light;
+}
+
+.Caption {
+    position: absolute;
+    top:33%;
+    text-transform: uppercase;
+}
+
+.Caption h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: .3rem;
+    text-shadow: .1rem .1rem .8rem black;
+}
+
+.Caption h3 {
+    font-size: 1.5rem;
+    text-shadow: .1rem .1rem .5rem black;
+    padding-bottom: 1.2rem;
+}
+
+.CarouselItem a {
+    border-width: medium;
+    font-size: 1.1rem;
+    text-shadow: .1rem .1rem .5rem black;
+}
+
+.CarouselItem a:hover {
+    text-shadow: none;
+}
