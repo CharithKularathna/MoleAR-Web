@@ -4,7 +4,7 @@ class Layout extends Component{
     render(){
         return(
             <>
-                <p>Welcome to MoleAR...!</p>
+                <p>Welcome to MoleAR...! </p>
             </>
         )
     }
