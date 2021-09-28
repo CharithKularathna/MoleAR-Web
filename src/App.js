@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 
 import './App.css';
 import Layout from './hoc/Layout/Layout';
 
-class App extends Component {
-  render(){
-    return (
-      <div className="App">
-        <Layout />
-      </div>
-    );
-  }
+const app = () => {
+  return (
+    <div className="App">
+      <Layout />
+    </div>
+  );
 }
 
-export default App;
+export default app;
