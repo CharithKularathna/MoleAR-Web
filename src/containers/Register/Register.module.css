@@ -1,4 +1,4 @@
-.Signin {
+.Register {
     height: 100vh;
     display: -ms-flexbox;
     display: -webkit-box;
@@ -13,12 +13,12 @@
     padding-bottom: 40px;
     text-align: center;
     position: relative;
-    background:black;
+    background:white;
     overflow: hidden;
-    color: white;
+    color: black;
 }
 
-.Signin:before {
+.Register:before {
   content: ' ';
   display: block;
   position: absolute;
@@ -28,7 +28,8 @@
   height: 100%;
   z-index: 0;
   opacity: 0.4;
-  background-image: url('https://cdn.pixabay.com/photo/2018/02/27/14/58/crystal-grid-3185671_960_720.png');
+  background:grey;
+  /*background-image: url('https://cdn.pixabay.com/photo/2018/02/27/14/58/crystal-grid-3185671_960_720.png');*/
   background-repeat: no-repeat;
   background-position: 50% 0;
   -ms-background-size: cover;
@@ -36,7 +37,6 @@
   -moz-background-size: cover;
   -webkit-background-size: cover;
   background-size: cover;
-  color: white;
 }
 
 
@@ -69,26 +69,26 @@
     border-top-right-radius: 0;
   }
 
-.Signin hr{
+.Register hr{
     border-top: .1rem solid #666b71;
 } 
 
-.Signin p{
+.Register p{
     margin-top: 10px;
     margin-bottom: 0px;
 }
 
-.Signin a{
+.Register a{
     color: teal;
     text-decoration: none;
 }
 
-.Signin a:hover{
+.Register a:hover{
     color: #2d936c;
     text-shadow: darkgray;
 }
 
-.Signin button:disabled {
+.Register button:disabled {
     color: #555;
     background-color: #ccc;
     cursor: not-allowed;

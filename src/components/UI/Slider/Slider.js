@@ -22,7 +22,7 @@ const slider = () => {
                         <h1>Upload your 3-D molecules and target images</h1>
                         <h3>Create an Account for free</h3>
                         <NavLink to='/signin' className="btn btn-outline-light btn-lg m-2">Sign In</NavLink>
-                        <NavLink to='/' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
+                        <NavLink to='/register' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
                     </div>
                 </div>
                 <div className={"carousel-item "+ classes.SliderItem2 + ' ' + classes.CarouselItem}>
@@ -30,7 +30,7 @@ const slider = () => {
                     <h1>Upload your 3-D molecules and target images</h1>
                     <h3>Create an Account for free</h3>
                     <NavLink to='/signin' className="btn btn-outline-light btn-lg m-2">Sign In</NavLink>
-                    <NavLink to='/' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
+                    <NavLink to='/register' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
                     </div>
                 </div>
                 {/*<div className={"carousel-item "+ classes.SliderItem3 + ' ' + classes.CarouselItem}></div>*/}

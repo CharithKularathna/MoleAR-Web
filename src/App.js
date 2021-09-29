@@ -11,6 +11,7 @@ import './App.css';
 import Layout from './hoc/Layout/Layout';
 import Home from './containers/Home/Home';
 import Signin from './containers/Signin/Signin';
+import Register from './containers/Register/Register';
 
 const app = () => {
   return (
@@ -19,6 +20,7 @@ const app = () => {
         <Layout>
           <Switch>
             <Route path='/signin' component={Signin} />
+            <Route path='/register' component={Register} />
             <Route path='/' component={Home} />
           </Switch>
         </Layout>
