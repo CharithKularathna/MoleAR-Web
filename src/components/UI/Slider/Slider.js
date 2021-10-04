@@ -4,7 +4,14 @@ import classes from './Slider.module.css'
 import { Button } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 
-const slider = () => {
+import { 
+    SLIDER_HEADING_1,
+    SLIDER_HEADING_2,
+    SLIDER_SUBHEADING_1,
+    SLIDER_SUBHEADING_2 
+} from './../../../constants'
+
+const Slider = () => {
     return(
         <div id="carouselIndicators" className={"carousel slide " + classes.Carousel}
         data-ride="carousel" data-interval="5000">
@@ -19,16 +26,16 @@ const slider = () => {
             <div className="carousel-inner">
                 <div className={"carousel-item active "+ classes.SliderItem1 + ' ' + classes.CarouselItem}>
                     <div className={"carousel-caption text-center "+ classes.Caption}>
-                        <h1>Upload your 3-D molecules and target images</h1>
-                        <h3>Create an Account for free</h3>
+                        <h1>{SLIDER_HEADING_1}</h1>
+                        <h3>{SLIDER_SUBHEADING_1}</h3>
                         <NavLink to='/signin' className="btn btn-outline-light btn-lg m-2">Sign In</NavLink>
                         <NavLink to='/register' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
                     </div>
                 </div>
                 <div className={"carousel-item "+ classes.SliderItem2 + ' ' + classes.CarouselItem}>
                     <div className={"carousel-caption text-center "+ classes.Caption}>
-                    <h1>Upload your 3-D molecules and target images</h1>
-                    <h3>Create an Account for free</h3>
+                    <h1>{SLIDER_HEADING_2}</h1>
+                    <h3>{SLIDER_SUBHEADING_2}</h3>
                     <NavLink to='/signin' className="btn btn-outline-light btn-lg m-2">Sign In</NavLink>
                     <NavLink to='/register' className="btn btn-outline-light btn-lg m-2">Register</NavLink>
                     </div>
@@ -40,4 +47,4 @@ const slider = () => {
 
 }
 
-export default slider;
+export default Slider;

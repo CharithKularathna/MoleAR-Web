@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 */
-const input = ( props ) => {
+const Input = ( props ) => {
     return (
        <TextField 
             style={{width:'100%', marginBottom: '10px'}}
@@ -29,4 +29,4 @@ const input = ( props ) => {
 
 };
 
-export default input;
+export default Input;
