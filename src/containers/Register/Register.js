@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import classes from './Register.module.css'
+import { useDispatch, useSelector  } from 'react-redux'
 
+import { REGISTER } from '../../store/reducers/actionTypes'
 //import Input from './../../components/UI/Input/Input'
 import { Link } from 'react-router-dom'
 import { TextField } from '@material-ui/core'
 
+import { getAuthToken } from '../../store/selectors/selectors';
 import { isEqual, isFormFilled } from '../../utility'
+
+import classes from './Register.module.css'
 
 const Register = (props) => {
     const [name, setName] = useState("")
@@ -13,6 +17,10 @@ const Register = (props) => {
     const [email, setEmail] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [disabled, setDisabled] = useState(true)
+
+    const token = useSelector(getAuthToken)
+
+    const dispatchRegister = useDispatch()
 
     useEffect(() => {
         if (isFormFilled([name, password, email, confirmPassword]) && isEqual(password,confirmPassword)) {
@@ -63,11 +71,19 @@ const Register = (props) => {
     );
     
     let form = (
-            <form className="form-signin" style={{color:"white"}}>
+            <form className="form-signin" style={{color:"white"}} onSubmit={e => { 
+                e.preventDefault(); 
+                dispatchRegister({type: REGISTER, payload: {name:name, email:email, password:password}})
+            }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle} style={{color:'black'}}>Register</h1>
                 <hr />
                 {inputs}
-                <button disabled={disabled} className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                <button 
+                    disabled={disabled} 
+                    className="btn btn-lg btn-primary btn-block"
+                    onClick={() => dispatchRegister({type: REGISTER, payload: {name:name, email:email, password:password}})}>
+                    Register
+                </button>
             </form>
     );
     

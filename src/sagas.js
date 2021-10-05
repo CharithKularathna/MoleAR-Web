@@ -10,29 +10,50 @@ import { store } from './store'
 function* login(action) {
     const { email, password } = action.payload;
     try {
-      /*
-      const response = yield axios.post('login',{
-          email:email,
+      
+      const response = yield axios.post('login/',{
+          username:email,
           password: password
       })
-      */
-      const response = yield axios.get('/')
+      
       console.log("Login response: ", response);
       
       if (response.token) {   
-        //yield put({ type: LOGIN_SUCCESS, payload: { ...response } });
+        yield put({ type: LOGIN_SUCCESS, payload: { ...response } });
       } else {
-        //yield put({ type: LOGIN_FAILURE, payload: { ...response } });
+        yield put({ type: LOGIN_FAILURE, payload: { error: "Login Failed" } });
       }
     } catch (err) {
-      //yield put({ type: LOGIN_FAILURE, payload: { error: err } });
+      yield put({ type: LOGIN_FAILURE, payload: { error: "Login Failed" } });
+    }
+    
+}
+
+function* register(action) {
+    const { name, email, password } = action.payload;
+    try {
+      const response = yield axios.post('register/', {
+          username: name,
+          email: email,
+          password: password
+      })
+      
+      console.log("Register response: ", response);
+      
+      if (response.token) {   
+        yield put({ type: REGISTER_SUCCESS, payload: { ...response } });
+      } else {
+        yield put({ type: REGISTER_FAILURE, payload: { error: "Register Failed" } });
+      }
+    } catch (err) {
+      yield put({ type: REGISTER_FAILURE, payload: { error: "Register Failed" } });
     }
     
 }
 
 function* rootSaga() {
     yield takeLatest(LOGIN, login)
-    //yield takeEvery(REGISTER, register)
+    yield takeLatest(REGISTER, register)
 }
 
 export default rootSaga;

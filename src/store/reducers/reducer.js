@@ -1,11 +1,13 @@
 import {
     LOGIN_SUCCESS,
-    LOGIN_FAILURE
+    LOGIN_FAILURE,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE
 } from './actionTypes'
 
 const initialState = {
     token: null,
-    is_logged_in: false,
+    logged_email: "",
     success: false,
     error: false
 }
@@ -15,7 +17,7 @@ export function reducer(state = initialState, action) {
         case LOGIN_SUCCESS:
             return {
                 token: action.payload.token,
-                is_logged_in: true,
+                logged_email: action.payload.data.email_address,
                 error: false,
                 success: true
             }
@@ -24,21 +26,21 @@ export function reducer(state = initialState, action) {
                 ...state,
                 error: true
             }
-           /* 
-        case LOGIN_RESET_UI_STATE:
+        
+        case REGISTER_SUCCESS:
             return {
                 ...state,
-                error: false
+                error: false,
+                success: true
             }
             
-        case LOGOUT:
+        case REGISTER_FAILURE:
             return {
-                token: null,
-                is_logged_in: false,
-                error: false,
-                success:
+                ...state,
+                error: true,
+                success: false
             }
-        */
+        
         default:
             return state
     }

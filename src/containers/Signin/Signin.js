@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
+
 import { LOGIN  } from '../../store/reducers/actionTypes'
 
 //import Input from './../../components/UI/Input/Input'
@@ -55,7 +56,10 @@ const Signin = (props) => {
     );
     
     let form = (
-            <form className="form-signin">
+            <form className="form-signin" onSubmit={e => { 
+                e.preventDefault(); 
+                dispatchSignin({type: LOGIN, payload: {email:email, password:password}})
+            }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle}>Sign In</h1>
                 <hr />
                 {inputs}
