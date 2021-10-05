@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import classes from './Signin.module.css'
+import { useDispatch, useSelector  } from 'react-redux'
+import { LOGIN  } from '../../store/reducers/actionTypes'
 
 //import Input from './../../components/UI/Input/Input'
 import { NavLink } from 'react-router-dom'
 import { TextField } from '@material-ui/core';
-import axios from 'axios';
+
+import { getAuthToken } from '../../store/selectors/selectors';
+
+import classes from './Signin.module.css'
 
 const Signin = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [disabled, setDisabled] = useState(true)
-    const [signInSuccess, setsignInSuccess] = useState(false)
-    const [signInError, setsignInError] = useState(false)
+
+    const token = useSelector(getAuthToken)
+
+    const dispatchSignin = useDispatch()
+
+    useEffect(() => {
+        if(token && token!=="") {
+          console.log("Token changed or Added!")
+        }
+      },[token])
 
     useEffect(() => {
         if (email.length > 0 && password.length > 0) {
@@ -49,7 +61,12 @@ const Signin = (props) => {
                 {inputs}
                 <p>Don't have an Account?</p>
                 <NavLink to="/register">Create an Account</NavLink>
-                <button disabled={disabled} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button 
+                    disabled={disabled} 
+                    className="btn btn-lg btn-primary btn-block" 
+                    onClick={() => dispatchSignin({type: LOGIN, payload: {email:email, password:password}})}>
+                    Sign in
+                </button>
             </form>
     );
 
