@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
 import { Redirect } from "react-router-dom";
 
-import { LOGIN  } from '../../store/reducers/actionTypes'
+import { LOGIN_FAILURE, LOGIN_SUCCESS  } from '../../store/reducers/actionTypes'
 
 //import Input from './../../components/UI/Input/Input'
 import { NavLink } from 'react-router-dom'
 import { TextField } from '@material-ui/core';
 
 import { getAuthToken } from '../../store/selectors/selectors';
+import axios from '../../axiosAuth'
 
 import classes from './Signin.module.css'
 
@@ -19,12 +20,15 @@ const Signin = (props) => {
 
     const token = useSelector(getAuthToken)
 
-    const dispatchSignin = useDispatch()
-    let redirect = null;
+    const dispatchSuccess = useDispatch()
+    const dispatchError = useDispatch()
+    
 
     useEffect(() => {
         if(token && token!=="") {
-          redirect = <Redirect to="/upload"></Redirect>
+          console.log("Token added. And back to sign-in render...")
+          
+          //redirect = <Redirect to="/upload"></Redirect>
         }
       },[token])
 
@@ -33,6 +37,19 @@ const Signin = (props) => {
             setDisabled(false);
         }
     },[email, password])
+
+    const signInHandler = () => {
+        axios.post('login/', {
+            username: email,
+            password: password
+        }).then(res => {
+            console.log(res)
+            dispatchSuccess({type: LOGIN_SUCCESS, payload: {token:res.data.token, email: res.data.data.email_address}})
+        }).catch(err => {
+            console.log(err)
+            dispatchError({type: LOGIN_FAILURE})
+        })
+    }
     
     let inputs = (
         <>
@@ -59,8 +76,7 @@ const Signin = (props) => {
     
     let form = (
             <form className="form-signin" onSubmit={e => { 
-                e.preventDefault(); 
-                dispatchSignin({type: LOGIN, payload: {email:email, password:password}})
+                e.preventDefault();
             }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle}>Sign In</h1>
                 <hr />
@@ -70,17 +86,19 @@ const Signin = (props) => {
                 <button 
                     disabled={disabled} 
                     className="btn btn-lg btn-primary btn-block" 
-                    onClick={() => dispatchSignin({type: LOGIN, payload: {email:email, password:password}})}>
+                    onClick={() => signInHandler()}>
                     Sign in
                 </button>
             </form>
     );
 
     return(
-        <div className={classes.Signin}>
-            {redirect}
-            {form}
-        </div>
+        <>
+            {token ? <Redirect to="/upload" /> : null}
+            <div className={classes.Signin}>
+                {form}
+            </div>
+        </>
     )
 }
 

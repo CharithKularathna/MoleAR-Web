@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
 
-import { REGISTER } from '../../store/reducers/actionTypes'
+import { REGISTER_SUCCESS, REGISTER_FAILURE } from '../../store/reducers/actionTypes'
 //import Input from './../../components/UI/Input/Input'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { TextField } from '@material-ui/core'
 
 import { getAuthToken } from '../../store/selectors/selectors';
-import { isEqual, isFormFilled } from '../../utility'
+import { isEqual, isFormFilled } from '../../utility';
+import axios from '../../axiosAuth';
 
 import classes from './Register.module.css'
 
@@ -20,13 +21,28 @@ const Register = (props) => {
 
     const token = useSelector(getAuthToken)
 
-    const dispatchRegister = useDispatch()
+    const dispatchSuccessReg = useDispatch()
+    const dispatchErrorReg = useDispatch()
 
     useEffect(() => {
         if (isFormFilled([name, password, email, confirmPassword]) && isEqual(password,confirmPassword)) {
             setDisabled(false)
         }
     },[name, email, password, confirmPassword])
+
+    const registerHandler = () => {
+        axios.post('register/', {
+            username: name,
+            email: email,
+            password: password
+        }).then(res => {
+            console.log(res)
+            dispatchSuccessReg({type: REGISTER_SUCCESS})
+        }).catch(err => {
+            console.log(err)
+            dispatchErrorReg({type: REGISTER_FAILURE})
+        })
+    }
 
     let inputs = (
         <>
@@ -73,7 +89,6 @@ const Register = (props) => {
     let form = (
             <form className="form-signin" style={{color:"white"}} onSubmit={e => { 
                 e.preventDefault(); 
-                dispatchRegister({type: REGISTER, payload: {name:name, email:email, password:password}})
             }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle} style={{color:'black'}}>Register</h1>
                 <hr />
@@ -81,16 +96,19 @@ const Register = (props) => {
                 <button 
                     disabled={disabled} 
                     className="btn btn-lg btn-primary btn-block"
-                    onClick={() => dispatchRegister({type: REGISTER, payload: {name:name, email:email, password:password}})}>
+                    onClick={() => registerHandler()}>
                     Register
                 </button>
             </form>
     );
     
     return(
-        <div className={classes.Register}>
-            {form}
-        </div>
+        <>
+            {token ? <Redirect to="/upload" /> : null}
+            <div className={classes.Register}>
+                {form}
+            </div>
+        </>
     )
 }
 

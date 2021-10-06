@@ -1,3 +1,4 @@
+/*
 import { put, takeEvery, takeLatest } from 'redux-saga/effects'
 import axios from './axiosAuth'
 import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE, 
@@ -90,3 +91,4 @@ function* rootSaga() {
 
 export default rootSaga;
 
+*/

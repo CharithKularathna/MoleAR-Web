@@ -8,8 +8,10 @@ import {
 const initialState = {
     token: null,
     logged_email: "",
-    success: false,
-    error: false
+    logSuccess: false,
+    logError: false,
+    registerSuccess: false,
+    registerError: false
 }
 
 export function reducer(state = initialState, action) {
@@ -17,28 +19,37 @@ export function reducer(state = initialState, action) {
         case LOGIN_SUCCESS:
             return {
                 token: action.payload.token,
-                logged_email: action.payload.data.email_address,
-                error: false,
-                success: true
+                logged_email: action.payload.email,
+                logError: false,
+                logSuccess: true,
+                registerSuccess: false,
+                registerError: false
             }
         case LOGIN_FAILURE:
             return {
                 ...state,
-                error: true
+                logError: true,
+                logSuccess: false,
+                registerSuccess: false,
+                registerError: false
             }
         
         case REGISTER_SUCCESS:
             return {
                 ...state,
-                error: false,
-                success: true
+                logError: false,
+                logSuccess: false,
+                registerSuccess: true,
+                registerError: false
             }
             
         case REGISTER_FAILURE:
             return {
                 ...state,
-                error: true,
-                success: false
+                logError: false,
+                logSuccess: false,
+                registerSuccess: false,
+                registerError: true
             }
         
         default:
