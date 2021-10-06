@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
+import { Redirect } from "react-router-dom";
 
 import { LOGIN  } from '../../store/reducers/actionTypes'
 
@@ -19,10 +20,11 @@ const Signin = (props) => {
     const token = useSelector(getAuthToken)
 
     const dispatchSignin = useDispatch()
+    let redirect = null;
 
     useEffect(() => {
         if(token && token!=="") {
-          console.log("Token changed or Added!")
+          redirect = <Redirect to="/upload"></Redirect>
         }
       },[token])
 
@@ -37,8 +39,8 @@ const Signin = (props) => {
             <TextField
                 style={{width:'100%', marginBottom: '10px'}}
                 variant="outlined"
-                label="Email"
-                type="email"
+                label="Username"
+                type="text"
                 value={email}
                 onChange={(e) =>  setEmail(e.target.value) }
                 required
@@ -76,6 +78,7 @@ const Signin = (props) => {
 
     return(
         <div className={classes.Signin}>
+            {redirect}
             {form}
         </div>
     )
