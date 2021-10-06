@@ -14,3 +14,4 @@ export const UPLOAD_SUCCESS = "UPLOAD_SUCCESS"
 export const UPLOAD_FAILURE = "UPLOAD_FAILURE"
 
 export const LOGOUT = "LOGOUT"
+export const REINSTATE_STATE = "REINSTATE_STATE"

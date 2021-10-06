@@ -13,9 +13,7 @@ const Upload = (props) => {
 
     const dispatchUpload = useDispatch()
     const token = useSelector(getAuthToken)
-    if (token && token!==""){
-        console.log(token)
-    }
+    
     let inputs = (
         <>
             <label>Image</label>

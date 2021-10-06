@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-import Navbar from '../../components/Nav/NavBar/NavBar'
 //import Sidebar from '../../components/Nav/Sidebar/Sidebar'
 import { Grid, Paper } from '@material-ui/core'
+import { useDispatch } from 'react-redux';
 
-const layout = (props) => {
+import { REINSTATE_STATE } from '../../store/reducers/actionTypes';
+import Navbar from '../../components/Nav/NavBar/NavBar'
+
+const Layout = (props) => {
+    const dispatchReinstateState = useDispatch()
+    useEffect(() => {
+        console.log("Layout Re-rendered")
+        dispatchReinstateState({type: REINSTATE_STATE})
+    }, [])
+
     return(
-
         <>
             <Grid container justify="center" spacing={1}>
                 <Grid item xs={12}>
@@ -40,4 +48,4 @@ const layout = (props) => {
     )
 }
 
-export default layout;
+export default Layout;

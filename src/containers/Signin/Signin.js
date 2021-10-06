@@ -27,7 +27,6 @@ const Signin = (props) => {
     useEffect(() => {
         if(token && token!=="") {
           console.log("Token added. And back to sign-in render...")
-          
           //redirect = <Redirect to="/upload"></Redirect>
         }
       },[token])

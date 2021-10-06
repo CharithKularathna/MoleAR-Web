@@ -3,64 +3,58 @@ import {
     LOGIN_FAILURE,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
-    LOGOUT
+    LOGOUT,
+    REINSTATE_STATE
 } from './actionTypes'
+
+const removeTokensFromLocalStorage = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('email')
+}
+
+const persistTokens = (token, email) => {
+    localStorage.setItem('token', token)
+    localStorage.setItem('email', email)
+}
 
 const initialState = {
     token: null,
     logged_email: null,
-    logSuccess: false,
-    logError: false,
-    registerSuccess: false,
-    registerError: false
 }
 
 export function reducer(state = initialState, action) {
     switch(action.type) {
+        case REINSTATE_STATE:
+            return {
+                token: localStorage.getItem('token'),
+                logged_email: localStorage.getItem('email'),
+            }
         case LOGIN_SUCCESS:
+            persistTokens(action.payload.token, action.payload.email)
             return {
                 token: action.payload.token,
                 logged_email: action.payload.email,
-                logError: false,
-                logSuccess: true,
-                registerSuccess: false,
-                registerError: false
             }
         case LOGIN_FAILURE:
             return {
-                ...state,
-                logError: true,
-                logSuccess: false,
-                registerSuccess: false,
-                registerError: false
+                ...state
             }
         
         case REGISTER_SUCCESS:
             return {
-                ...state,
-                logError: false,
-                logSuccess: false,
-                registerSuccess: true,
-                registerError: false
+                ...state
             }
             
         case REGISTER_FAILURE:
             return {
-                ...state,
-                logError: false,
-                logSuccess: false,
-                registerSuccess: false,
-                registerError: true
+                ...state
             }
         
         case LOGOUT:
+            removeTokensFromLocalStorage();
             return {
                 token: null,
                 logged_email: null,
-                logError: false,
-                logSuccess: false,
-                registerSuccess: false,
-                registerError: false
             }
         
         default:

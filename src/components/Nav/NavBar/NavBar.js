@@ -11,6 +11,11 @@ import { LOGOUT } from '../../../store/reducers/actionTypes';
 const NavBar = () => {
     const token = useSelector(getAuthToken)
     const dispatchLogout = useDispatch()
+
+    const logoutHandler = () => {
+        dispatchLogout({type: LOGOUT})
+    }
+
     const styleArray = ['navbar','navbar-expand', 'fixed-top']
     return(
         <>
@@ -31,7 +36,7 @@ const NavBar = () => {
                     {logoutLink}
                     */}
                     <li className={'nav-item'}>
-                        {token && <button className="btn btn-outline-light btn-lg m-2" onClick={(e)=>dispatchLogout({type: LOGOUT})}>Logout</button>}
+                        {token && <button className="btn btn-outline-light btn-lg m-2" onClick={(e)=>logoutHandler()}>Logout</button>}
                     </li>
                 </ul>
             </nav>
