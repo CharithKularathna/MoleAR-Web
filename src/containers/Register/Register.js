@@ -105,7 +105,7 @@ const Register = (props) => {
     return(
         <>
             {token ? <Redirect to="/upload" /> : null}
-            <div className={classes.Register}>
+            <div style={{marginTop: "100px", marginLeft: "400px", marginRight: "400px"}}>
                 {form}
             </div>
         </>

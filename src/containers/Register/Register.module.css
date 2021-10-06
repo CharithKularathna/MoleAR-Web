@@ -1,3 +1,4 @@
+/*
 .Register {
     height: 100vh;
     display: -ms-flexbox;
@@ -28,7 +29,7 @@
   height: 100%;
   opacity: 0.4;
   background:grey;
-  /*background-image: url('https://cdn.pixabay.com/photo/2018/02/27/14/58/crystal-grid-3185671_960_720.png');*/
+  background-image: url('https://cdn.pixabay.com/photo/2018/02/27/14/58/crystal-grid-3185671_960_720.png');
   background-repeat: no-repeat;
   background-position: 50% 0;
   -ms-background-size: cover;
@@ -41,7 +42,7 @@
 
 .form-signin {
     width: 100%;
-    /*max-width: 330px;*/
+    max-width: 330px;
     padding: 15px;
     margin: 0 auto;
     box-shadow: 0 2px 3px #ccc;
@@ -93,3 +94,5 @@
     cursor: not-allowed;
     margin-top: 5px;
 }
+
+*/

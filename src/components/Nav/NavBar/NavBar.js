@@ -1,11 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector  } from 'react-redux'
+
 //import classes from './NavBar.module.css'
 import logo from '../../../assets/img/temp-logo.jpg'
-import { NavLink, Link } from 'react-router-dom'
-const navBar = () => {
+
+import { NavLink, Link, Redirect } from 'react-router-dom'
+
+import { getAuthToken } from '../../../store/selectors/selectors';
+import { LOGOUT } from '../../../store/reducers/actionTypes';
+const NavBar = () => {
+    const token = useSelector(getAuthToken)
+    const dispatchLogout = useDispatch()
     const styleArray = ['navbar','navbar-expand', 'fixed-top']
     return(
         <>
+            {!token && <Redirect to="/home"/>}
             <nav className={styleArray.join(" ")} style={{backgroundColor:"#1B1212", width:'100%', alignItems: 'left'}}>
                 <div className='navbar-brand' style={{height:'60px', marginBottom:'0.25rem'}}><Link to='/'><img style={{height:'60px', width:'90px'}} src={logo}></img></Link></div>
                 <ul style={{marginLeft:'80%'}} className='navbar-nav'>
@@ -22,7 +31,7 @@ const navBar = () => {
                     {logoutLink}
                     */}
                     <li className={'nav-item'}>
-                        <NavLink className="btn btn-outline-light btn-lg m-2" exact to='upload/' >Upload Files</NavLink>
+                        {token && <button className="btn btn-outline-light btn-lg m-2" onClick={(e)=>dispatchLogout({type: LOGOUT})}>Logout</button>}
                     </li>
                 </ul>
             </nav>
@@ -30,4 +39,4 @@ const navBar = () => {
     )
 }
 
-export default navBar;
+export default NavBar;

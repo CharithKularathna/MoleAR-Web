@@ -2,12 +2,13 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     REGISTER_SUCCESS,
-    REGISTER_FAILURE
+    REGISTER_FAILURE,
+    LOGOUT
 } from './actionTypes'
 
 const initialState = {
     token: null,
-    logged_email: "",
+    logged_email: null,
     logSuccess: false,
     logError: false,
     registerSuccess: false,
@@ -50,6 +51,16 @@ export function reducer(state = initialState, action) {
                 logSuccess: false,
                 registerSuccess: false,
                 registerError: true
+            }
+        
+        case LOGOUT:
+            return {
+                token: null,
+                logged_email: null,
+                logError: false,
+                logSuccess: false,
+                registerSuccess: false,
+                registerError: false
             }
         
         default:
