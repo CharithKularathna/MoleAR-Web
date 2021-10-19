@@ -33,7 +33,7 @@ const Upload = (props) => {
             console.log(pair[0]+ ', ' + pair[1]); 
         }
 
-        axios.post('upload-image/', fd, {
+        axios.post('accept-upload-image/', fd, {
             headers: {
                 'Authorization': 'token ' + token
             }
@@ -65,6 +65,7 @@ const Upload = (props) => {
                 label="3D Object"
                 type="file"
                 onChange={(e) =>  setObject3D(e.target.files[0]) }
+                required
             />
             <hr></hr>
             <label>MTL File</label>
@@ -73,6 +74,7 @@ const Upload = (props) => {
                 label="MTL"
                 type="file"
                 onChange={(e) =>  setMtl(e.target.files[0]) }
+                required
             />
             <hr></hr>
         </>

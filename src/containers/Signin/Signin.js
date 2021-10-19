@@ -8,6 +8,8 @@ import { LOGIN_FAILURE, LOGIN_SUCCESS  } from '../../store/reducers/actionTypes'
 import { NavLink } from 'react-router-dom'
 import { TextField } from '@material-ui/core';
 
+import Alert from '../../components/UI/Alert/Alert';
+
 import { getAuthToken } from '../../store/selectors/selectors';
 import axios from '../../axiosAuth'
 
@@ -17,6 +19,7 @@ const Signin = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [disabled, setDisabled] = useState(true)
+    const [error, setError] = useState(false)
 
     const token = useSelector(getAuthToken)
 
@@ -43,13 +46,26 @@ const Signin = (props) => {
             password: password
         }).then(res => {
             console.log(res)
+            setError(false)
             dispatchSuccess({type: LOGIN_SUCCESS, payload: {token:res.data.token, email: res.data.data.email_address}})
         }).catch(err => {
             console.log(err)
-            dispatchError({type: LOGIN_FAILURE})
+            //dispatchError({type: LOGIN_FAILURE})
+            setError(true)
         })
     }
     
+    let errorAlert = null;
+
+    if (error) {
+        errorAlert = (
+            <Alert 
+                type="Error" 
+                title="Error - Check Credentials and Try Again !">
+            </Alert>
+        )
+    }
+
     let inputs = (
         <>
             <TextField
@@ -79,6 +95,7 @@ const Signin = (props) => {
             }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle}>Sign In</h1>
                 <hr />
+                {errorAlert}
                 {inputs}
                 <p>Don't have an Account?</p>
                 <NavLink to="/register">Create an Account</NavLink>
