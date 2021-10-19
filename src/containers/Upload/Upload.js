@@ -3,6 +3,8 @@ import { useDispatch, useSelector  } from 'react-redux'
 import { getAuthToken } from '../../store/selectors/selectors';
 import { UPLOAD } from '../../store/reducers/actionTypes'
 
+import axios from '../../axiosAuth';
+
 import classes from './Upload.module.css'
 
 const Upload = (props) => {
@@ -13,6 +15,38 @@ const Upload = (props) => {
 
     const dispatchUpload = useDispatch()
     const token = useSelector(getAuthToken)
+
+    const clearForm = () => {
+
+    }
+
+    const uploadHandler = () => {
+        let fd = new FormData()
+        //console.log(image.name)
+        fd.append('image', image)
+        fd.append('object_3D', object3D)
+        fd.append('mtl', mtl)
+        //console.log(fd)
+
+        // Display the key/value pairs
+        for (var pair of fd.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
+        axios.post('upload-image/', fd, {
+            headers: {
+                'Authorization': 'token ' + token
+            }
+        }).then(res => {
+            console.log("UPLOAD SUCCESS")
+            console.log(res)
+            //dispatchSuccessReg({type: REGISTER_SUCCESS})
+        }).catch(err => {
+            console.log("UPLOAD FAILED")
+            console.log(err)
+            //dispatchErrorReg({type: REGISTER_FAILURE})
+        })
+    }
     
     let inputs = (
         <>
@@ -54,7 +88,7 @@ const Upload = (props) => {
                 <button 
                     disabled={disabled} 
                     className="btn btn-lg btn-primary btn-block" 
-                    onClick={() => dispatchUpload({type: UPLOAD, payload: {image:image, object_3D:object3D, mtl:mtl}})}>
+                    onClick={() => uploadHandler()}>
                     Upload
                 </button>
             </form>
