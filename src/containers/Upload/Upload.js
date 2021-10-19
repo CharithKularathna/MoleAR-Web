@@ -3,6 +3,8 @@ import { useDispatch, useSelector  } from 'react-redux'
 import { getAuthToken } from '../../store/selectors/selectors';
 import { UPLOAD } from '../../store/reducers/actionTypes'
 
+import Spinner from "../../components/UI/Spinner/Spinner"
+
 import axios from '../../axiosAuth';
 
 import classes from './Upload.module.css'
@@ -11,7 +13,10 @@ const Upload = (props) => {
     const [image, setImage] = useState(null)
     const [object3D, setObject3D] = useState(null)
     const [mtl, setMtl] = useState(null)
+
+    //UI State
     const [disabled, setDisabled] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const dispatchUpload = useDispatch()
     const token = useSelector(getAuthToken)
@@ -21,6 +26,7 @@ const Upload = (props) => {
     }
 
     const uploadHandler = () => {
+        setLoading(true)
         let fd = new FormData()
         //console.log(image.name)
         fd.append('image', image)
@@ -38,10 +44,12 @@ const Upload = (props) => {
                 'Authorization': 'token ' + token
             }
         }).then(res => {
+            setLoading(false)
             console.log("UPLOAD SUCCESS")
             console.log(res)
             //dispatchSuccessReg({type: REGISTER_SUCCESS})
         }).catch(err => {
+            setLoading(false)
             console.log("UPLOAD FAILED")
             console.log(err)
             //dispatchErrorReg({type: REGISTER_FAILURE})
@@ -95,6 +103,10 @@ const Upload = (props) => {
                 </button>
             </form>
     );
+    
+    if (loading) {
+        form = <Spinner />
+    }
 
     return(
         <div style={{marginTop: "100px", marginLeft: "400px", marginRight: "400px"}} className={classes.Signin}>
