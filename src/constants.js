@@ -8,4 +8,5 @@ export const SLIDER_SUBHEADING_2 = "Create an Account for free";
 
 //URLS
 
-export const BACKEND_DEV_URL = "http://34.125.149.186:8000/playground/"
+export const BACKEND_DEV_URL = "https://34.125.149.186:8000/playground/"
+
