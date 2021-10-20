@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom'
 import { TextField } from '@material-ui/core';
 
 import Alert from '../../components/UI/Alert/Alert';
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 import { getAuthToken } from '../../store/selectors/selectors';
 import axios from '../../axiosAuth'
@@ -44,17 +45,20 @@ const Signin = (props) => {
     },[email, password])
 
     const signInHandler = () => {
+        setLoading(true)
         axios.post('login/', {
             username: email,
             password: password
         }).then(res => {
             console.log(res)
             setError(false)
+            setLoading(false)
             dispatchSuccess({type: LOGIN_SUCCESS, payload: {token:res.data.token, email: res.data.data.email_address}})
         }).catch(err => {
             console.log(err)
             //dispatchError({type: LOGIN_FAILURE})
             setError(true)
+            setLoading(false)
         })
     }
     
@@ -110,6 +114,10 @@ const Signin = (props) => {
                 </button>
             </form>
     );
+
+    if (loading) {
+        form = <Spinner />
+    }
 
     return(
         <>

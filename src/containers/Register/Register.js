@@ -6,6 +6,9 @@ import { REGISTER_SUCCESS, REGISTER_FAILURE } from '../../store/reducers/actionT
 import { Redirect } from 'react-router-dom'
 import { TextField } from '@material-ui/core'
 
+import Alert from '../../components/UI/Alert/Alert'
+import Spinner from '../../components/UI/Spinner/Spinner'
+
 import { getAuthToken } from '../../store/selectors/selectors';
 import { isEqual, isFormFilled } from '../../utility';
 import axios from '../../axiosAuth';
@@ -17,7 +20,11 @@ const Register = (props) => {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+
+    //UI State
     const [disabled, setDisabled] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
 
     const token = useSelector(getAuthToken)
 
@@ -31,15 +38,20 @@ const Register = (props) => {
     },[name, email, password, confirmPassword])
 
     const registerHandler = () => {
+        setLoading(true)
         axios.post('register/', {
             username: name,
             email: email,
             password: password
         }).then(res => {
             console.log(res)
+            setError(false)
+            setLoading(false)
             dispatchSuccessReg({type: REGISTER_SUCCESS})
         }).catch(err => {
             console.log(err)
+            setLoading(false)
+            setError(true)
             dispatchErrorReg({type: REGISTER_FAILURE})
         })
     }
@@ -86,12 +98,25 @@ const Register = (props) => {
         </>
     );
     
+    let errorAlert = null;
+
+    if (error) {
+        errorAlert = (
+            <Alert 
+                type="Error" 
+                title="Error - Register Failed. Try Again !">
+            </Alert>
+        )
+    }
+
+
     let form = (
             <form className="form-signin" style={{color:"white"}} onSubmit={e => { 
                 e.preventDefault(); 
             }}>
                 <h1 className={"h3 mb-3 font-weight-normal " + classes.FormTitle} style={{color:'black'}}>Register</h1>
                 <hr />
+                {errorAlert}
                 {inputs}
                 <button 
                     disabled={disabled} 
@@ -101,7 +126,11 @@ const Register = (props) => {
                 </button>
             </form>
     );
-    
+
+    if (loading) {
+        form = <Spinner />
+    }
+
     return(
         <>
             {token ? <Redirect to="/upload" /> : null}
