@@ -14,6 +14,7 @@ import { isEqual, isFormFilled } from '../../utility';
 import axios from '../../axiosAuth';
 
 import classes from './Register.module.css'
+import ConfirmDialog from '../../components/UI/Dialog/ConfirmDialog/ConfirmDialog'
 
 const Register = (props) => {
     const [name, setName] = useState("")
@@ -25,6 +26,8 @@ const Register = (props) => {
     const [disabled, setDisabled] = useState(true)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [redirectBack, setRedirectBack] = useState(false)
 
     const token = useSelector(getAuthToken)
 
@@ -48,12 +51,18 @@ const Register = (props) => {
             setError(false)
             setLoading(false)
             dispatchSuccessReg({type: REGISTER_SUCCESS})
+            setSuccess(true)
         }).catch(err => {
             console.log(err)
             setLoading(false)
             setError(true)
+            setSuccess(false)
             dispatchErrorReg({type: REGISTER_FAILURE})
         })
+    }
+
+    const confirmHandler = () => {
+        setRedirectBack(true)
     }
 
     let inputs = (
@@ -131,9 +140,22 @@ const Register = (props) => {
         form = <Spinner />
     }
 
+    else if (success) {
+        form = (
+            <ConfirmDialog
+                trigger={success}
+                handleClose={()=>confirmHandler()}
+                handleConfirm={()=>confirmHandler()}
+                title="Register Successful !"
+                description="Check you Email for the Account Confirmation Link"
+            />
+        )
+    }
+
     return(
         <>
             {token ? <Redirect to="/upload" /> : null}
+            {redirectBack ? <Redirect to="/" /> : null}
             <div style={{marginTop: "100px", marginLeft: "400px", marginRight: "400px"}}>
                 {form}
             </div>
